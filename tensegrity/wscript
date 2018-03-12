@@ -1,0 +1,25 @@
+#! /usr/bin/env python
+
+import limbo
+import ros
+
+def options(opt):
+    opt.load('ros')
+
+def configure(conf):
+    conf.load('ros')
+    conf.check_ros()
+
+def build(bld):
+    bld(features='cxx cxxprogram',
+        source='main.cpp serial.cpp',
+        includes='. ../../src',
+        target='tens',
+        uselib='BOOST EIGEN TBB LIBCMAES NLOPT ROS',
+        use='limbo')
+
+    bld(features='cxx cxxprogram',
+        source='test-controller.cpp serial.cpp',
+        includes='. ../../src',
+        uselib='BOOST EIGEN ROS',
+        target='test-tens')
